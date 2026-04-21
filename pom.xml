@@ -44,6 +44,33 @@
                     <mainClass>CoverageMain</mainClass>
                 </configuration>
             </plugin>
+            <!-- Dependency Plugin to copy jdk8.jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-jdk8</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.checkerframework</groupId>
+                                    <artifactId>jdk8</artifactId>
+                                    <version>3.3.0</version>
+                                    <type>jar</type>
+                                    <destFileName>jdk8.jar</destFileName>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>

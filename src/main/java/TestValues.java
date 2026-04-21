@@ -7,12 +7,14 @@ import java.util.List;
 import java.util.Map;
 
 public class TestValues {
-    private Map<soot.Value, ArrayList<String>> map;
-    private Map<soot.Value, soot.Type> dataTypes;
+    private Map<soot.Value, ArrayList<String>> map; // Tracks different states for each Value to have more branch coverage
+    private Map<soot.Value, soot.Type> dataTypes; // Tracks the data type of each Value to ensure we are tracking the correct variables
+    private List<soot.Value> functionInputs; // Tracks the input types for each function to ensure we are testing with the correct data types
 
-    public TestValues(Map<soot.Value, ArrayList<String>> map, Map<soot.Value, soot.Type> dataTypes) {
+    public TestValues(Map<soot.Value, ArrayList<String>> map, Map<soot.Value, soot.Type> dataTypes, List<soot.Value> functionInputs) {
         this.map = map;
         this.dataTypes = dataTypes;
+        this.functionInputs = functionInputs;
     }
 
     public TestValues() {
@@ -45,11 +47,26 @@ public class TestValues {
         }
     }
 
+    public void addNewTestCase(soot.Value v, String newCase) {
+        if (!map.containsKey(v)) {
+            map.put(v, new ArrayList<>());
+        }
+        map.get(v).add(newCase);
+    }
+
     public  void copy(TestValues testValues) {
         this.map.clear();
         this.map.putAll(testValues.map);
-        // commenting this out right now because data types are fixed and do not change X_X
-//        this.dataTypes.clear();
-//        this.dataTypes.putAll(testValues.dataTypes);
+        // Datatypes are not touched
+    }
+
+    public void printTestValues() {
+        System.out.println("Current Test Values:");
+        for(soot.Value v : functionInputs) {
+            System.out.println("Variable: " + v + " of type: " + dataTypes.get(v) + " Size of test case : " + map.get(v).size());
+            for(String s : map.get(v)) {
+                System.out.println("  Test Values: " + s);
+            }
+        }
     }
 }

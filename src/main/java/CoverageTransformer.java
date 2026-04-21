@@ -18,11 +18,34 @@ public class CoverageTransformer extends BodyTransformer {
         // Run your custom ForwardBranchedFlowAnalysis on the graph
         CoverageAnalysis analysis = new CoverageAnalysis(graph);
 
-        // Optionally, do something with the analysis results here
-        // e.g., iterating through the units to print their flow sets
-        // for (soot.Unit u : body.getUnits()) {
-        // System.out.println(u + " -> [FallFlow: " + analysis.getFallFlowAfter(u) +
-        // ", BranchFlow: " + analysis.getBranchFlowAfter(u) + "]");
-        // }
+        // After the analysis is done, we can extract the accumulated TestValues.
+        // Because of the flow analysis, the final values at the exit points (tails) of the method
+        // will contain the accumulated test cases.
+        if (!graph.getTails().isEmpty()) {
+            // Get the flow from the first tail node
+            TestValues finalFlow = (TestValues) analysis.getFallFlowAfter(graph.getTails().get(0));
+            
+            // If there are multiple exit points, merge their results
+            for (int i = 1; i < graph.getTails().size(); i++) {
+                TestValues otherFlow = (TestValues) analysis.getFallFlowAfter(graph.getTails().get(i));
+                if (finalFlow != null && otherFlow != null) {
+                    finalFlow.merge(otherFlow);
+                }
+            }
+            
+            // Print the final accumulated values for this method
+            if (finalFlow != null) {
+                finalFlow.printTestValues();
+            }
+        } else {
+            // Fallback if the method has no exit points
+            soot.Unit lastUnit = body.getUnits().getLast();
+            if (lastUnit != null) {
+                TestValues flow = (TestValues) analysis.getFallFlowAfter(lastUnit);
+                if (flow != null) {
+                    flow.printTestValues();
+                }
+            }
+        }
     }
 }

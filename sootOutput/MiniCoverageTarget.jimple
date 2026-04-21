@@ -1,0 +1,124 @@
+public class MiniCoverageTarget extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        MiniCoverageTarget r0;
+
+        r0 := @this: MiniCoverageTarget;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public int sign(int)
+    {
+        int i0, $i2;
+        MiniCoverageTarget r0;
+
+        r0 := @this: MiniCoverageTarget;
+
+        i0 := @parameter0: int;
+
+        if i0 >= 0 goto label1;
+
+        $i2 = (int) -1;
+
+        return $i2;
+
+     label1:
+        if i0 != 0 goto label2;
+
+        return 0;
+
+     label2:
+        return 1;
+    }
+
+    public boolean login(boolean, boolean, boolean)
+    {
+        MiniCoverageTarget r0;
+        boolean z0, z1, z2;
+
+        r0 := @this: MiniCoverageTarget;
+
+        z1 := @parameter0: boolean;
+
+        z0 := @parameter1: boolean;
+
+        z2 := @parameter2: boolean;
+
+        if z0 == 0 goto label1;
+
+        return 0;
+
+     label1:
+        if z1 == 0 goto label2;
+
+        if z2 == 0 goto label2;
+
+        return 1;
+
+     label2:
+        if z1 == 0 goto label3;
+
+        return 1;
+
+     label3:
+        return 0;
+    }
+
+    public java.lang.String bucket(int)
+    {
+        int i0;
+        MiniCoverageTarget r0;
+
+        r0 := @this: MiniCoverageTarget;
+
+        i0 := @parameter0: int;
+
+        if i0 >= 0 goto label1;
+
+        return "neg";
+
+     label1:
+        if i0 >= 10 goto label2;
+
+        return "small";
+
+     label2:
+        if i0 >= 100 goto label3;
+
+        return "medium";
+
+     label3:
+        return "large";
+    }
+
+    public int mode(int)
+    {
+        int i0;
+        MiniCoverageTarget r0;
+
+        r0 := @this: MiniCoverageTarget;
+
+        i0 := @parameter0: int;
+
+        lookupswitch(i0)
+        {
+            case 0: goto label1;
+            case 1: goto label2;
+            default: goto label3;
+        };
+
+     label1:
+        return 10;
+
+     label2:
+        return 20;
+
+     label3:
+        return 30;
+    }
+}

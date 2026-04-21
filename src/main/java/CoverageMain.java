@@ -15,8 +15,9 @@ public class CoverageMain {
         String targetDir = "target/test-classes";
         Options.v().set_process_dir(Collections.singletonList(targetDir));
 
-        // Use the system classpath to find standard library classes like java.lang.Object
-        Options.v().set_prepend_classpath(true);
+        Options.v().set_prepend_classpath(false);
+        String cp = targetDir + java.io.File.pathSeparator + "target/jdk8.jar";
+        Options.v().set_soot_classpath(cp);
 
         // Allow phantom references for things that Soot can't find
         Options.v().set_allow_phantom_refs(true);
