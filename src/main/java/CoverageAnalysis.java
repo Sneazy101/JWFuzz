@@ -23,13 +23,14 @@ public class CoverageAnalysis extends ForwardBranchedFlowAnalysis<Tracer> {
         Map<Value, ArrayList<String>> map = new java.util.HashMap<>();
         Map<Value, soot.Type> dataTypes = new java.util.HashMap<>();
         List<Value> functionInputs = new ArrayList<>();
+
         for (Local l : graph.getBody().getLocals()) {
             map.put(l, new ArrayList<String>());
             dataTypes.put(l, l.getType());
         }
-        for (Value v : graph.getBody().getParameterLocals()) {
-            functionInputs.add(v);
-        }
+
+        functionInputs.addAll(graph.getBody().getParameterLocals());
+
         this.reporter = new TestValues(map, dataTypes, functionInputs);
 
         doAnalysis();
