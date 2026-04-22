@@ -116,9 +116,7 @@ public class CoverageAnalysis extends ForwardBranchedFlowAnalysis<Tracer> {
                     reporter.addNewTestCase(leftOp, parseValue(leftOp.getType(), rightOp.toString()));
                 }
             } else if (leftOp.getType().toString().equals("java.lang.String")) {
-                if (expr.contains("==")) {
-                    reporter.addNewTestCase(leftOp, parseValue(leftOp.getType(), rightOp.toString()));
-                } else if (expr.contains("!=")) {
+                if (expr.contains("==") || expr.contains("!=")) {
                     reporter.addNewTestCase(leftOp, parseValue(leftOp.getType(), rightOp.toString()));
                 }
             }

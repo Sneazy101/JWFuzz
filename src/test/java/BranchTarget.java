@@ -1,6 +1,6 @@
 public class BranchTarget {
 
-    public int classify(int age, boolean hasId, boolean vip, int purchases) {
+    public int classify(int age, boolean hasId, boolean vip, int purchases, String name) {
         if (age < 0) {
             return -1;
         }
@@ -11,6 +11,13 @@ public class BranchTarget {
             } else {
                 return 2;
             }
+        }
+        if (name == null || name.isEmpty()) {
+            return -2;
+        }
+
+        if (name == "bumblebee") {
+            return 8;
         }
 
         if (vip && purchases > 10) {

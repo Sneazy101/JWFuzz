@@ -50,12 +50,8 @@ public class TestValues {
 
         int total = 1;
         for (soot.Value v : functionInputs) {
-            List<Object> inputData = map.get(v);
-            if (inputData == null || inputData.isEmpty()) {
-                System.out.println("No input data found for variable: " + v);
-                return new ArrayList<>();
-            }
-            total *= inputData.size();
+            System.out.println("Input Variable: " + v + ", Data Type: " + dataTypes.get(v) + ", Test Values: " + map.get(v));
+            total *= map.get(v).size();
         }
 
         System.out.println("The number of tests to be generated -> " + total);

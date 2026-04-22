@@ -14,8 +14,8 @@ public class MiniCoverageTarget extends java.lang.Object
 
     public int sign(int)
     {
-        int i0, $i2;
         MiniCoverageTarget r0;
+        int i0, i1, $i3;
 
         r0 := @this: MiniCoverageTarget;
 
@@ -23,14 +23,16 @@ public class MiniCoverageTarget extends java.lang.Object
 
         if i0 >= 0 goto label1;
 
-        $i2 = (int) -1;
+        $i3 = (int) -1;
 
-        return $i2;
+        return $i3;
 
      label1:
         if i0 != 0 goto label2;
 
-        return 0;
+        i1 = 1 / 0;
+
+        return i1;
 
      label2:
         return 1;
@@ -39,6 +41,7 @@ public class MiniCoverageTarget extends java.lang.Object
     public boolean login(boolean, boolean, boolean)
     {
         MiniCoverageTarget r0;
+        java.lang.NullPointerException r1;
         boolean z0, z1, z2;
 
         r0 := @this: MiniCoverageTarget;
@@ -58,7 +61,11 @@ public class MiniCoverageTarget extends java.lang.Object
 
         if z2 == 0 goto label2;
 
-        return 1;
+        r1 = new java.lang.NullPointerException;
+
+        specialinvoke r1.<java.lang.NullPointerException: void <init>(java.lang.String)>("This statement would have triggered an Exception: $stack6 = virtualinvoke s.<java.lang.String: boolean equals(java.lang.Object)>(\"admin\")");
+
+        throw r1;
 
      label2:
         if z1 == 0 goto label3;
@@ -71,10 +78,12 @@ public class MiniCoverageTarget extends java.lang.Object
 
     public java.lang.String bucket(int)
     {
-        int i0;
-        MiniCoverageTarget r0;
+        int[] r0;
+        MiniCoverageTarget r2;
+        int i0, $i1;
+        java.lang.String $r1;
 
-        r0 := @this: MiniCoverageTarget;
+        r2 := @this: MiniCoverageTarget;
 
         i0 := @parameter0: int;
 
@@ -90,7 +99,13 @@ public class MiniCoverageTarget extends java.lang.Object
      label2:
         if i0 >= 100 goto label3;
 
-        return "medium";
+        r0 = newarray (int)[2];
+
+        $i1 = r0[5];
+
+        $r1 = staticinvoke <java.lang.String: java.lang.String valueOf(int)>($i1);
+
+        return $r1;
 
      label3:
         return "large";
@@ -98,10 +113,12 @@ public class MiniCoverageTarget extends java.lang.Object
 
     public int mode(int)
     {
+        MiniCoverageTarget r2;
         int i0;
-        MiniCoverageTarget r0;
+        java.lang.RuntimeException $r0;
+        java.lang.String $r1;
 
-        r0 := @this: MiniCoverageTarget;
+        r2 := @this: MiniCoverageTarget;
 
         i0 := @parameter0: int;
 
@@ -119,6 +136,12 @@ public class MiniCoverageTarget extends java.lang.Object
         return 20;
 
      label3:
-        return 30;
+        $r0 = new java.lang.RuntimeException;
+
+        $r1 = dynamicinvoke "makeConcatWithConstants" <java.lang.String (int)>(i0) <java.lang.invoke.StringConcatFactory: java.lang.invoke.CallSite makeConcatWithConstants(java.lang.invoke.MethodHandles$Lookup,java.lang.String,java.lang.invoke.MethodType,java.lang.String,java.lang.Object[])>("Unexpected mode input: \u0001");
+
+        specialinvoke $r0.<java.lang.RuntimeException: void <init>(java.lang.String)>($r1);
+
+        throw $r0;
     }
 }
