@@ -43,35 +43,48 @@ public class TestValues {
         }
     }
 
-    public void printTestValues() {
-        System.out.println("Current Test Values:");
-        for(soot.Value v : functionInputs) {
-            System.out.println("Variable: " + v + " of type: " + dataTypes.get(v) + " Size of test case : " + map.get(v).size());
-            for(Object s : map.get(v)) {
-                System.out.println("  Test Values: " + s);
-            }
-        }
-    }
-
     public ArrayList<ArrayList<Object>> generateTestCases() {
-        //Permutates through all possible input values for the function which is used to generate Test Cases for the JUnit test generator
         ArrayList<ArrayList<Object>> testCases = new ArrayList<>();
+        testCases.add(new ArrayList<>());
+
+        int total = 1;
         for (soot.Value v : functionInputs) {
-            List<Object> states = map.get(v);
-            for (Object state : states) {
-                ArrayList<Object> testCase = new ArrayList<>();
-                testCase.add(state);
-                testCases.add(testCase);
+            List<Object> inputData = map.get(v);
+            if (inputData == null || inputData.isEmpty()) {
+                System.out.println("No input data found for variable: " + v);
+                return new ArrayList<>();
             }
+            total *= inputData.size();
         }
 
-        for(Object testCase : testCases) {
+        System.out.println("The number of tests to be generated -> " + total);
+
+        for (soot.Value v : functionInputs) {
+            ArrayList<ArrayList<Object>> temp = new ArrayList<>();
+            List<Object> inputData = map.get(v);
+
+            for (ArrayList<Object> currentTestCase : testCases) {
+                for (Object o : inputData) {
+                    ArrayList<Object> newTestCase = new ArrayList<>(currentTestCase);
+                    newTestCase.add(o);
+                    temp.add(newTestCase);
+                }
+            }
+
+            testCases = temp;
+        }
+
+        System.out.println("Printing all test cases");
+        for (ArrayList<Object> testCase : testCases) {
             System.out.println("Generated Test Case: " + testCase);
         }
+
         return testCases;
     }
 
     public String generateJUnitTest(String targetClassName, String methodName) {
+
+        ArrayList<ArrayList<Object>> testArray = generateTestCases();
         // Clean up method name for class name (remove special characters if any)
         String safeMethodName = methodName.replaceAll("[^a-zA-Z0-9_]", "_");
         String testClassName = targetClassName + "_" + safeMethodName + "Test";
@@ -90,7 +103,7 @@ public class TestValues {
         for (int i = 0; i < functionInputs.size(); i++) {
             soot.Value targetParam = functionInputs.get(i);
             List<Object> valuesToTest = map.get(targetParam);
-            
+
             if (valuesToTest == null || valuesToTest.isEmpty()) continue;
 
             // Generate a test call for each value of this parameter
@@ -98,13 +111,13 @@ public class TestValues {
                 hasTests = true;
                 sb.append("        // Testing parameter ").append(targetParam).append(" with value: ").append(testVal).append("\n");
                 sb.append("        obj.").append(methodName).append("(");
-                
+
                 // Construct arguments
                 for (int j = 0; j < functionInputs.size(); j++) {
                     soot.Value argParam = functionInputs.get(j);
                     String argType = dataTypes.get(argParam).toString();
                     String argValue;
-                    
+
                     if (i == j) {
                         // Use the specific test value for the target parameter
                         argValue = formatValue(argType, testVal);
@@ -112,7 +125,7 @@ public class TestValues {
                         // Use a default value for other parameters
                         argValue = getDefaultValue(argType);
                     }
-                    
+
                     sb.append(argValue);
                     if (j < functionInputs.size() - 1) {
                         sb.append(", ");
@@ -130,6 +143,7 @@ public class TestValues {
         sb.append("}\n");
         return sb.toString();
     }
+
 
     private String formatValue(String type, Object value) {
         if (value == null) return "null";
