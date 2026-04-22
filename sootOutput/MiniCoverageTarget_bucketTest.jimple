@@ -14,20 +14,27 @@ public class MiniCoverageTarget_bucketTest extends java.lang.Object
 
     public void test_bucket()
     {
+        int $i1;
         MiniCoverageTarget_bucketTest r1;
-        MiniCoverageTarget $r0;
+        MiniCoverageTarget $r2;
 
         r1 := @this: MiniCoverageTarget_bucketTest;
 
-        $r0 = new MiniCoverageTarget;
+        $r2 = new MiniCoverageTarget;
 
-        specialinvoke $r0.<MiniCoverageTarget: void <init>()>();
+        specialinvoke $r2.<MiniCoverageTarget: void <init>()>();
 
-        virtualinvoke $r0.<MiniCoverageTarget: java.lang.String bucket(int)>(0);
+        virtualinvoke $r2.<MiniCoverageTarget: java.lang.String bucket(int)>(0);
 
-        virtualinvoke $r0.<MiniCoverageTarget: java.lang.String bucket(int)>(10);
+        virtualinvoke $r2.<MiniCoverageTarget: java.lang.String bucket(int)>(1);
 
-        virtualinvoke $r0.<MiniCoverageTarget: java.lang.String bucket(int)>(100);
+        $i1 = (int) -1;
+
+        virtualinvoke $r2.<MiniCoverageTarget: java.lang.String bucket(int)>($i1);
+
+        virtualinvoke $r2.<MiniCoverageTarget: java.lang.String bucket(int)>(10);
+
+        virtualinvoke $r2.<MiniCoverageTarget: java.lang.String bucket(int)>(100);
 
         return;
     }

@@ -1,0 +1,28 @@
+public class BranchTarget_classifyTest_test_classifyTest_test_test_classifyTest__init_Test_test__init_Test__init_Test extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        BranchTarget_classifyTest_test_classifyTest_test_test_classifyTest__init_Test_test__init_Test__init_Test r0;
+
+        r0 := @this: BranchTarget_classifyTest_test_classifyTest_test_test_classifyTest__init_Test_test__init_Test__init_Test;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public void test__init_()
+    {
+        BranchTarget_classifyTest_test_classifyTest_test_test_classifyTest__init_Test_test__init_Test__init_Test r1;
+        BranchTarget_classifyTest_test_classifyTest_test_test_classifyTest__init_Test_test__init_Test $r0;
+
+        r1 := @this: BranchTarget_classifyTest_test_classifyTest_test_test_classifyTest__init_Test_test__init_Test__init_Test;
+
+        $r0 = new BranchTarget_classifyTest_test_classifyTest_test_test_classifyTest__init_Test_test__init_Test;
+
+        specialinvoke $r0.<BranchTarget_classifyTest_test_classifyTest_test_test_classifyTest__init_Test_test__init_Test: void <init>()>();
+
+        return;
+    }
+}

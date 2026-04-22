@@ -20,16 +20,36 @@ public class CoverageAnalysis extends ForwardBranchedFlowAnalysis<Tracer> {
         this.graph = graph;
         
         // Initialize the persistent reporter
-        Map<Value, ArrayList<String>> map = new java.util.HashMap<>();
+        Map<Value, ArrayList<Object>> map = new java.util.HashMap<>();
         Map<Value, soot.Type> dataTypes = new java.util.HashMap<>();
         List<Value> functionInputs = new ArrayList<>();
+
         for (Local l : graph.getBody().getLocals()) {
-            map.put(l, new ArrayList<String>());
+            map.put(l, new ArrayList<>());
             dataTypes.put(l, l.getType());
+            if(l.getType() == soot.BooleanType.v()){
+                ArrayList<Object> boolValues = map.get(l);
+                boolValues.add(true);
+                boolValues.add(false);
+            } else if (l.getType() == soot.IntType.v()) {
+                ArrayList<Object> intValues = map.get(l);
+                intValues.add(0);
+                intValues.add(1);
+                intValues.add(-1);
+            } else if (l.getType() == soot.FloatType.v()) {
+                ArrayList<Object> floatValues = map.get(l);
+                floatValues.add(0.0f);
+                floatValues.add(1.0f);
+                floatValues.add(-1.0f);
+            } else if (l.getType().toString().equals("java.lang.String")) {
+                ArrayList<Object> stringValues = map.get(l);
+                stringValues.add("");
+                stringValues.add(" ");
+            }
         }
-        for (Value v : graph.getBody().getParameterLocals()) {
-            functionInputs.add(v);
-        }
+
+        functionInputs.addAll(graph.getBody().getParameterLocals());
+
         this.reporter = new TestValues(map, dataTypes, functionInputs);
 
         doAnalysis();
@@ -79,42 +99,58 @@ public class CoverageAnalysis extends ForwardBranchedFlowAnalysis<Tracer> {
             tracer.addEquation(eqNode);
 
             // Report the test values persistently using leftOp's type
-            if (leftOp.getType() == soot.IntType.v() || leftOp.getType() == soot.BooleanType.v()) {
-                if (expr.contains("==")) {
-                    reporter.addNewTestCase(leftOp, rightOp.toString());
-                } else if (expr.contains("!=")) {
-                    reporter.addNewTestCase(leftOp, rightOp.toString());
-                } else if (expr.contains(">")) {
-                    reporter.addNewTestCase(leftOp, rightOp.toString());
-                } else if (expr.contains("<")) {
-                    reporter.addNewTestCase(leftOp, rightOp.toString());
-                } else if (expr.contains(">=")) {
-                    reporter.addNewTestCase(leftOp, rightOp.toString());
-                } else if (expr.contains("<=")) {
-                    reporter.addNewTestCase(leftOp, rightOp.toString());
+            if (leftOp.getType() == soot.IntType.v()) {
+                if (operator.equals("==") || operator.equals("!=")) {
+                    reporter.addNewTestCase(leftOp, parseValue(leftOp.getType(), rightOp.toString()));
+                } else if (operator.equals(">") || operator.equals("<")) {
+                    reporter.addNewTestCase(leftOp, parseValue(leftOp.getType(), rightOp.toString()));
+                } else if (operator.equals(">=") || operator.equals("<=")) {
+                    reporter.addNewTestCase(leftOp, parseValue(leftOp.getType(), rightOp.toString()));
                 }
             } else if (leftOp.getType() == soot.FloatType.v()) {
-                if (expr.contains("==")) {
-                    reporter.addNewTestCase(leftOp, rightOp.toString());
-                } else if (expr.contains("!=")) {
-                    reporter.addNewTestCase(leftOp, rightOp.toString());
-                } else if (expr.contains(">")) {
-                    reporter.addNewTestCase(leftOp, rightOp.toString());
-                } else if (expr.contains("<")) {
-                    reporter.addNewTestCase(leftOp, rightOp.toString());
-                } else if (expr.contains(">=")) {
-                    reporter.addNewTestCase(leftOp, rightOp.toString());
-                } else if (expr.contains("<=")) {
-                    reporter.addNewTestCase(leftOp, rightOp.toString());
+                if (operator.equals("==") || operator.equals("!=")) {
+                    reporter.addNewTestCase(leftOp, parseValue(leftOp.getType(), rightOp.toString()));
+                } else if (operator.equals(">") || operator.equals("<")) {
+                    reporter.addNewTestCase(leftOp, parseValue(leftOp.getType(), rightOp.toString()));
+                } else if (operator.equals(">=") || operator.equals("<=")) {
+                    reporter.addNewTestCase(leftOp, parseValue(leftOp.getType(), rightOp.toString()));
                 }
             } else if (leftOp.getType().toString().equals("java.lang.String")) {
                 if (expr.contains("==")) {
-                    reporter.addNewTestCase(leftOp, rightOp.toString());
+                    reporter.addNewTestCase(leftOp, parseValue(leftOp.getType(), rightOp.toString()));
                 } else if (expr.contains("!=")) {
-                    reporter.addNewTestCase(leftOp, rightOp.toString());
+                    reporter.addNewTestCase(leftOp, parseValue(leftOp.getType(), rightOp.toString()));
                 }
             }
         }
+    }
+
+    private Object parseValue(soot.Type type, String valStr) {
+        try {
+            if (type == soot.IntType.v()) {
+                return Integer.parseInt(valStr);
+            } else if (type == soot.BooleanType.v()) {
+                return valStr.equals("1") || valStr.equalsIgnoreCase("true");
+            } else if (type == soot.ByteType.v()) {
+                return Byte.parseByte(valStr);
+            } else if (type == soot.ShortType.v()) {
+                return Short.parseShort(valStr);
+            } else if (type == soot.LongType.v()) {
+                return Long.parseLong(valStr.replaceAll("[l|L]$", ""));
+            } else if (type == soot.FloatType.v()) {
+                return Float.parseFloat(valStr.replaceAll("[f|F]$", ""));
+            } else if (type == soot.DoubleType.v()) {
+                return Double.parseDouble(valStr.replaceAll("[d|D]$", ""));
+            } else if (type.toString().equals("java.lang.String")) {
+                if (valStr.startsWith("\"") && valStr.endsWith("\"")) {
+                    return valStr.substring(1, valStr.length() - 1);
+                }
+                return valStr;
+            }
+        } catch (Exception e) {
+            // Ignore exception and return string fallback
+        }
+        return valStr;
     }
 
     @Override

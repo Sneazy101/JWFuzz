@@ -8,7 +8,11 @@ public class CoverageTransformer extends BodyTransformer {
 
     @Override
     protected void internalTransform(Body body, String phaseName, Map<String, String> options) {
-        System.out.println("Applying CoverageTransformer to method: " + body.getMethod().getSignature());
+        String methodName = body.getMethod().getName();
+        if (methodName.equals("<init>") || methodName.equals("<clinit>")) {
+            return;
+        }
+        // System.out.println("Applying CoverageTransformer to method: " + body.getMethod().getSignature());
 
         // Create a Control Flow Graph (CFG) for the method body.
         // BriefUnitGraph handles basic CFG without exceptional edges.
@@ -22,10 +26,10 @@ public class CoverageTransformer extends BodyTransformer {
         // TestValues is now persistent and doesn't need to be extracted from flow sets.
         TestValues reporter = analysis.getReporter();
         if (reporter != null) {
-            reporter.printTestValues();
+            // reporter.printTestValues();
 
             String className = body.getMethod().getDeclaringClass().getShortName();
-            String methodName = body.getMethod().getName();
+            methodName = body.getMethod().getName();
             String safeMethodName = methodName.replaceAll("[^a-zA-Z0-9_]", "_");
             String testClassName = className + "_" + safeMethodName + "Test";
             
@@ -39,7 +43,7 @@ public class CoverageTransformer extends BodyTransformer {
                 try (java.io.FileWriter fw = new java.io.FileWriter(file)) {
                     fw.write(junitCode);
                 }
-                System.out.println("Saved JUnit test to " + file.getAbsolutePath());
+                // System.out.println("Saved JUnit test to " + file.getAbsolutePath());
             } catch (java.io.IOException e) {
                 System.err.println("Failed to save JUnit test: " + e.getMessage());
             }
@@ -49,9 +53,9 @@ public class CoverageTransformer extends BodyTransformer {
         if (!graph.getTails().isEmpty()) {
             Tracer finalFlow = (Tracer) analysis.getFallFlowAfter(graph.getTails().get(0));
             if (finalFlow != null) {
-                System.out.println("--- Symbolic Tracer State for " + body.getMethod().getName() + " ---");
-                System.out.println(finalFlow.toString());
-                System.out.println("----------------------------------------\n");
+                // System.out.println("--- Symbolic Tracer State for " + body.getMethod().getName() + " ---");
+                // System.out.println(finalFlow.toString());
+                // System.out.println("----------------------------------------\n");
             }
         }
     }

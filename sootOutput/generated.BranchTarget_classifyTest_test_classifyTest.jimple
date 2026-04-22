@@ -1,0 +1,31 @@
+public class generated.BranchTarget_classifyTest_test_classifyTest extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        java.lang.Error $r0;
+        generated.BranchTarget_classifyTest_test_classifyTest r1;
+
+        r1 := @this: generated.BranchTarget_classifyTest_test_classifyTest;
+
+        $r0 = new java.lang.Error;
+
+        specialinvoke $r0.<java.lang.Error: void <init>(java.lang.String)>("Unresolved compilation problem: \n\tThe declared package \"\" does not match the expected package \"generated\"\n");
+
+        throw $r0;
+    }
+
+    public void test_test_classify()
+    {
+        java.lang.Error $r0;
+        generated.BranchTarget_classifyTest_test_classifyTest r1;
+
+        r1 := @this: generated.BranchTarget_classifyTest_test_classifyTest;
+
+        $r0 = new java.lang.Error;
+
+        specialinvoke $r0.<java.lang.Error: void <init>(java.lang.String)>("Unresolved compilation problem: \n");
+
+        throw $r0;
+    }
+}

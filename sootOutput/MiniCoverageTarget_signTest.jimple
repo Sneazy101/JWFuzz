@@ -15,15 +15,22 @@ public class MiniCoverageTarget_signTest extends java.lang.Object
     public void test_sign()
     {
         MiniCoverageTarget_signTest r1;
-        MiniCoverageTarget $r0;
+        int $i1;
+        MiniCoverageTarget $r2;
 
         r1 := @this: MiniCoverageTarget_signTest;
 
-        $r0 = new MiniCoverageTarget;
+        $r2 = new MiniCoverageTarget;
 
-        specialinvoke $r0.<MiniCoverageTarget: void <init>()>();
+        specialinvoke $r2.<MiniCoverageTarget: void <init>()>();
 
-        virtualinvoke $r0.<MiniCoverageTarget: int sign(int)>(0);
+        virtualinvoke $r2.<MiniCoverageTarget: int sign(int)>(0);
+
+        virtualinvoke $r2.<MiniCoverageTarget: int sign(int)>(1);
+
+        $i1 = (int) -1;
+
+        virtualinvoke $r2.<MiniCoverageTarget: int sign(int)>($i1);
 
         return;
     }

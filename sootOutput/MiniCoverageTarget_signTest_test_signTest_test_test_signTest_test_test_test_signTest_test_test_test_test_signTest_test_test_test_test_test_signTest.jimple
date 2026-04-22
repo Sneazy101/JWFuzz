@@ -1,0 +1,28 @@
+public class MiniCoverageTarget_signTest_test_signTest_test_test_signTest_test_test_test_signTest_test_test_test_test_signTest_test_test_test_test_test_signTest extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        MiniCoverageTarget_signTest_test_signTest_test_test_signTest_test_test_test_signTest_test_test_test_test_signTest_test_test_test_test_test_signTest r0;
+
+        r0 := @this: MiniCoverageTarget_signTest_test_signTest_test_test_signTest_test_test_test_signTest_test_test_test_test_signTest_test_test_test_test_test_signTest;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public void test_test_test_test_test_test_sign()
+    {
+        MiniCoverageTarget_signTest_test_signTest_test_test_signTest_test_test_test_signTest_test_test_test_test_signTest_test_test_test_test_test_signTest r1;
+        MiniCoverageTarget_signTest_test_signTest_test_test_signTest_test_test_test_signTest_test_test_test_test_signTest $r0;
+
+        r1 := @this: MiniCoverageTarget_signTest_test_signTest_test_test_signTest_test_test_test_signTest_test_test_test_test_signTest_test_test_test_test_test_signTest;
+
+        $r0 = new MiniCoverageTarget_signTest_test_signTest_test_test_signTest_test_test_test_signTest_test_test_test_test_signTest;
+
+        specialinvoke $r0.<MiniCoverageTarget_signTest_test_signTest_test_test_signTest_test_test_test_signTest_test_test_test_test_signTest: void <init>()>();
+
+        return;
+    }
+}

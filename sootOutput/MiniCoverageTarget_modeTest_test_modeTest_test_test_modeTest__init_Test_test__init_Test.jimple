@@ -1,0 +1,28 @@
+public class MiniCoverageTarget_modeTest_test_modeTest_test_test_modeTest__init_Test_test__init_Test extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        MiniCoverageTarget_modeTest_test_modeTest_test_test_modeTest__init_Test_test__init_Test r0;
+
+        r0 := @this: MiniCoverageTarget_modeTest_test_modeTest_test_test_modeTest__init_Test_test__init_Test;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public void test_test__init_()
+    {
+        MiniCoverageTarget_modeTest_test_modeTest_test_test_modeTest__init_Test $r0;
+        MiniCoverageTarget_modeTest_test_modeTest_test_test_modeTest__init_Test_test__init_Test r1;
+
+        r1 := @this: MiniCoverageTarget_modeTest_test_modeTest_test_test_modeTest__init_Test_test__init_Test;
+
+        $r0 = new MiniCoverageTarget_modeTest_test_modeTest_test_test_modeTest__init_Test;
+
+        specialinvoke $r0.<MiniCoverageTarget_modeTest_test_modeTest_test_test_modeTest__init_Test: void <init>()>();
+
+        return;
+    }
+}
