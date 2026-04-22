@@ -8,6 +8,10 @@ public class CoverageTransformer extends BodyTransformer {
 
     @Override
     protected void internalTransform(Body body, String phaseName, Map<String, String> options) {
+        String methodName = body.getMethod().getName();
+        if (methodName.equals("<init>") || methodName.equals("<clinit>")) {
+            return;
+        }
         // System.out.println("Applying CoverageTransformer to method: " + body.getMethod().getSignature());
 
         // Create a Control Flow Graph (CFG) for the method body.
@@ -25,7 +29,7 @@ public class CoverageTransformer extends BodyTransformer {
             // reporter.printTestValues();
 
             String className = body.getMethod().getDeclaringClass().getShortName();
-            String methodName = body.getMethod().getName();
+            methodName = body.getMethod().getName();
             String safeMethodName = methodName.replaceAll("[^a-zA-Z0-9_]", "_");
             String testClassName = className + "_" + safeMethodName + "Test";
             

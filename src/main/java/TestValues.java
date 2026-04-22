@@ -20,6 +20,7 @@ public class TestValues {
     public TestValues() {
         this.map = new java.util.HashMap<>();
         this.dataTypes = new java.util.HashMap<>();
+        this.functionInputs = new ArrayList<>();
     }
 
     public void addValue(soot.Value v, List<Object> states) {
@@ -70,7 +71,6 @@ public class TestValues {
                     temp.add(newTestCase);
                 }
             }
-
             testCases = temp;
         }
 
@@ -99,32 +99,20 @@ public class TestValues {
 
         boolean hasTests = false;
 
-        // Iterate through each parameter
-        for (int i = 0; i < functionInputs.size(); i++) {
-            soot.Value targetParam = functionInputs.get(i);
-            List<Object> valuesToTest = map.get(targetParam);
-
-            if (valuesToTest == null || valuesToTest.isEmpty()) continue;
-
-            // Generate a test call for each value of this parameter
-            for (Object testVal : valuesToTest) {
-                hasTests = true;
-                sb.append("        // Testing parameter ").append(targetParam).append(" with value: ").append(testVal).append("\n");
+        // Iterate through each test case generated
+        if (testArray != null && !testArray.isEmpty()) {
+            hasTests = true;
+            for (ArrayList<Object> testCase : testArray) {
+                sb.append("        // Testing with values: ").append(testCase).append("\n");
                 sb.append("        obj.").append(methodName).append("(");
 
                 // Construct arguments
                 for (int j = 0; j < functionInputs.size(); j++) {
                     soot.Value argParam = functionInputs.get(j);
                     String argType = dataTypes.get(argParam).toString();
-                    String argValue;
-
-                    if (i == j) {
-                        // Use the specific test value for the target parameter
-                        argValue = formatValue(argType, testVal);
-                    } else {
-                        // Use a default value for other parameters
-                        argValue = getDefaultValue(argType);
-                    }
+                    Object testVal = testCase.get(j);
+                    
+                    String argValue = formatValue(argType, testVal);
 
                     sb.append(argValue);
                     if (j < functionInputs.size() - 1) {
@@ -157,14 +145,6 @@ public class TestValues {
         } else if (type.equals("java.lang.String")) {
             return "\"" + strVal + "\"";
         }
-        return "null";
-    }
-
-    private String getDefaultValue(String type) {
-        if (type.equals("boolean")) return "false";
-        if (type.equals("int") || type.equals("byte") || type.equals("short") || type.equals("long")) return "0";
-        if (type.equals("float") || type.equals("double")) return "0.0";
-        if (type.equals("java.lang.String")) return "\"\"";
         return "null";
     }
 }
