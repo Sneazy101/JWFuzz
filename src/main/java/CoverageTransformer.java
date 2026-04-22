@@ -26,10 +26,33 @@ public class CoverageTransformer extends BodyTransformer {
 
             String className = body.getMethod().getDeclaringClass().getShortName();
             String methodName = body.getMethod().getName();
+            String safeMethodName = methodName.replaceAll("[^a-zA-Z0-9_]", "_");
+            String testClassName = className + "_" + safeMethodName + "Test";
             
-            System.out.println("\n--- Generated JUnit Test for " + methodName + " ---");
-            System.out.println(reporter.generateJUnitTest(className, methodName));
-            System.out.println("----------------------------------------\n");
+            String junitCode = reporter.generateJUnitTest(className, methodName);
+            
+            // Save to file
+            try {
+                java.io.File dir = new java.io.File("src/test/java/generated");
+                if (!dir.exists()) dir.mkdirs();
+                java.io.File file = new java.io.File(dir, testClassName + ".java");
+                try (java.io.FileWriter fw = new java.io.FileWriter(file)) {
+                    fw.write(junitCode);
+                }
+                System.out.println("Saved JUnit test to " + file.getAbsolutePath());
+            } catch (java.io.IOException e) {
+                System.err.println("Failed to save JUnit test: " + e.getMessage());
+            }
+        }
+
+        // Print the resolved equations collected by the Tracer for debugging
+        if (!graph.getTails().isEmpty()) {
+            Tracer finalFlow = (Tracer) analysis.getFallFlowAfter(graph.getTails().get(0));
+            if (finalFlow != null) {
+                System.out.println("--- Symbolic Tracer State for " + body.getMethod().getName() + " ---");
+                System.out.println(finalFlow.toString());
+                System.out.println("----------------------------------------\n");
+            }
         }
     }
 }

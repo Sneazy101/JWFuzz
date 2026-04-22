@@ -8,13 +8,18 @@ public class Tracer {
 
     // The equations accumulated on a specific path
     private java.util.List<ExprNode> equations;
+    
+    // The symbolic state mapping intermediate variables back to their input expressions
+    private java.util.Map<String, ExprNode> symbolicState;
 
     public Tracer() {
         this.equations = new java.util.ArrayList<>();
+        this.symbolicState = new java.util.HashMap<>();
     }
 
-    public Tracer(java.util.List<ExprNode> equations) {
+    public Tracer(java.util.List<ExprNode> equations, java.util.Map<String, ExprNode> symbolicState) {
         this.equations = new java.util.ArrayList<>(equations);
+        this.symbolicState = new java.util.HashMap<>(symbolicState);
     }
 
     public java.util.List<ExprNode> getEquations() {
@@ -27,9 +32,26 @@ public class Tracer {
         }
     }
 
+    public void putSymbol(String varName, ExprNode expr) {
+        symbolicState.put(varName, expr);
+    }
+
+    public ExprNode resolveValue(Value v) {
+        if (v instanceof soot.jimple.Constant) {
+            return new ConstNode(v.toString());
+        }
+        String name = v.toString();
+        if (symbolicState.containsKey(name)) {
+            return symbolicState.get(name);
+        }
+        return new VarNode(v);
+    }
+
     public void copy(Tracer other) {
         this.equations.clear();
         this.equations.addAll(other.equations);
+        this.symbolicState.clear();
+        this.symbolicState.putAll(other.symbolicState);
     }
 
     public void merge(Tracer other) {
@@ -38,11 +60,18 @@ public class Tracer {
                 this.equations.add(expr);
             }
         }
+        // For symbolic state, we could compute phi-functions or unions.
+        // For simplicity in branch tracking, we just merge all states.
+        for (java.util.Map.Entry<String, ExprNode> entry : other.symbolicState.entrySet()) {
+            if (!this.symbolicState.containsKey(entry.getKey())) {
+                this.symbolicState.put(entry.getKey(), entry.getValue());
+            }
+        }
     }
 
     @Override
     public String toString() {
-        return equations.toString();
+        return "Equations: " + equations.toString() + " | Symbols: " + symbolicState.toString();
     }
 
     // --- Expression Tree Node Definitions --- //

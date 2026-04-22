@@ -53,14 +53,18 @@ public class TestValues {
         }
     }
 
-    public String generateJUnitTest(String className, String methodName) {
+    public String generateJUnitTest(String targetClassName, String methodName) {
+        // Clean up method name for class name (remove special characters if any)
+        String safeMethodName = methodName.replaceAll("[^a-zA-Z0-9_]", "_");
+        String testClassName = targetClassName + "_" + safeMethodName + "Test";
+
         StringBuilder sb = new StringBuilder();
         sb.append("import org.junit.jupiter.api.Test;\n");
         sb.append("import static org.junit.jupiter.api.Assertions.*;\n\n");
-        sb.append("public class ").append(className).append("Test {\n\n");
+        sb.append("public class ").append(testClassName).append(" {\n\n");
         sb.append("    @Test\n");
-        sb.append("    public void test_").append(methodName).append("() {\n");
-        sb.append("        ").append(className).append(" obj = new ").append(className).append("();\n\n");
+        sb.append("    public void test_").append(safeMethodName).append("() {\n");
+        sb.append("        ").append(targetClassName).append(" obj = new ").append(targetClassName).append("();\n\n");
 
         boolean hasTests = false;
 

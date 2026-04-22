@@ -1,0 +1,34 @@
+public class MiniCoverageTarget_loginTest extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        MiniCoverageTarget_loginTest r0;
+
+        r0 := @this: MiniCoverageTarget_loginTest;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public void test_login()
+    {
+        MiniCoverageTarget_loginTest r1;
+        MiniCoverageTarget $r0;
+
+        r1 := @this: MiniCoverageTarget_loginTest;
+
+        $r0 = new MiniCoverageTarget;
+
+        specialinvoke $r0.<MiniCoverageTarget: void <init>()>();
+
+        virtualinvoke $r0.<MiniCoverageTarget: boolean login(boolean,boolean,boolean)>(0, 0, 0);
+
+        virtualinvoke $r0.<MiniCoverageTarget: boolean login(boolean,boolean,boolean)>(0, 0, 0);
+
+        virtualinvoke $r0.<MiniCoverageTarget: boolean login(boolean,boolean,boolean)>(0, 0, 0);
+
+        return;
+    }
+}

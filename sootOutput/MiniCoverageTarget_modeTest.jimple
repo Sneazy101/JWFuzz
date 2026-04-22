@@ -1,0 +1,28 @@
+public class MiniCoverageTarget_modeTest extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        MiniCoverageTarget_modeTest r0;
+
+        r0 := @this: MiniCoverageTarget_modeTest;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public void test_mode()
+    {
+        MiniCoverageTarget_modeTest r1;
+        MiniCoverageTarget $r0;
+
+        r1 := @this: MiniCoverageTarget_modeTest;
+
+        $r0 = new MiniCoverageTarget;
+
+        specialinvoke $r0.<MiniCoverageTarget: void <init>()>();
+
+        return;
+    }
+}

@@ -72,9 +72,9 @@ public class CoverageAnalysis extends ForwardBranchedFlowAnalysis<Tracer> {
             else if (expr.contains("<")) operator = "<";
             else operator = "?";
 
-            // Add the equation to our Tracer's Expression Tree
-            Tracer.ExprNode leftNode = new Tracer.VarNode(leftOp);
-            Tracer.ExprNode rightNode = new Tracer.ConstNode(rightOp.toString());
+            // Add the equation to our Tracer's Expression Tree using resolved symbolic values
+            Tracer.ExprNode leftNode = tracer.resolveValue(leftOp);
+            Tracer.ExprNode rightNode = tracer.resolveValue(rightOp);
             Tracer.ExprNode eqNode = new Tracer.BinaryOpNode(operator, leftNode, rightNode);
             tracer.addEquation(eqNode);
 
@@ -127,6 +127,48 @@ public class CoverageAnalysis extends ForwardBranchedFlowAnalysis<Tracer> {
         // 2. Copy incoming state to all branch targets
         for (Tracer out : branchOuts) {
             copy(in, out);
+        }
+
+        // Track assignments to build symbolic state
+        if (s instanceof soot.jimple.AssignStmt) {
+            soot.jimple.AssignStmt assign = (soot.jimple.AssignStmt) s;
+            Value leftOp = assign.getLeftOp();
+            Value rightOp = assign.getRightOp();
+            
+            Tracer.ExprNode rightNode = null;
+            
+            if (rightOp instanceof soot.jimple.BinopExpr) {
+                soot.jimple.BinopExpr binop = (soot.jimple.BinopExpr) rightOp;
+                Tracer.ExprNode r1 = in.resolveValue(binop.getOp1());
+                Tracer.ExprNode r2 = in.resolveValue(binop.getOp2());
+                
+                String exprStr = rightOp.toString();
+                String operator = "?";
+                if (exprStr.contains(" + ")) operator = "+";
+                else if (exprStr.contains(" - ")) operator = "-";
+                else if (exprStr.contains(" * ")) operator = "*";
+                else if (exprStr.contains(" / ")) operator = "/";
+                else if (exprStr.contains(" % ")) operator = "%";
+                else if (exprStr.contains(" & ")) operator = "&";
+                else if (exprStr.contains(" | ")) operator = "|";
+                else if (exprStr.contains(" ^ ")) operator = "^";
+                else if (exprStr.contains(" << ")) operator = "<<";
+                else if (exprStr.contains(" >> ")) operator = ">>";
+                else if (exprStr.contains(" >>> ")) operator = ">>>";
+                
+                rightNode = new Tracer.BinaryOpNode(operator, r1, r2);
+            } else {
+                rightNode = in.resolveValue(rightOp);
+            }
+            
+            if (rightNode != null) {
+                for (Tracer out : fallOut) {
+                    out.putSymbol(leftOp.toString(), rightNode);
+                }
+                for (Tracer out : branchOuts) {
+                    out.putSymbol(leftOp.toString(), rightNode);
+                }
+            }
         }
 
         if (s instanceof IfStmt) {
