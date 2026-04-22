@@ -1,0 +1,31 @@
+public class generated.MiniCoverageTarget_modeTest_test_modeTest extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        java.lang.Error $r0;
+        generated.MiniCoverageTarget_modeTest_test_modeTest r1;
+
+        r1 := @this: generated.MiniCoverageTarget_modeTest_test_modeTest;
+
+        $r0 = new java.lang.Error;
+
+        specialinvoke $r0.<java.lang.Error: void <init>(java.lang.String)>("Unresolved compilation problem: \n\tThe declared package \"\" does not match the expected package \"generated\"\n");
+
+        throw $r0;
+    }
+
+    public void test_test_mode()
+    {
+        java.lang.Error $r0;
+        generated.MiniCoverageTarget_modeTest_test_modeTest r1;
+
+        r1 := @this: generated.MiniCoverageTarget_modeTest_test_modeTest;
+
+        $r0 = new java.lang.Error;
+
+        specialinvoke $r0.<java.lang.Error: void <init>(java.lang.String)>("Unresolved compilation problem: \n");
+
+        throw $r0;
+    }
+}

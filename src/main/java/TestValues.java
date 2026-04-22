@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 public class TestValues {
-    private Map<soot.Value, ArrayList<String>> map; // Tracks different states for each Value to have more branch coverage
+    private Map<soot.Value, ArrayList<Object>> map; // Tracks different states for each Value to have more branch coverage
     private Map<soot.Value, soot.Type> dataTypes; // Tracks the data type of each Value to ensure we are tracking the correct variables
     private List<soot.Value> functionInputs; // Tracks the input types for each function to ensure we are testing with the correct data types
 
-    public TestValues(Map<soot.Value, ArrayList<String>> map, Map<soot.Value, soot.Type> dataTypes, List<soot.Value> functionInputs) {
+    public TestValues(Map<soot.Value, ArrayList<Object>> map, Map<soot.Value, soot.Type> dataTypes, List<soot.Value> functionInputs) {
         this.map = map;
         this.dataTypes = dataTypes;
         this.functionInputs = functionInputs;
@@ -22,7 +22,7 @@ public class TestValues {
         this.dataTypes = new java.util.HashMap<>();
     }
 
-    public void addValue(soot.Value v, List<String> states) {
+    public void addValue(soot.Value v, List<Object> states) {
         map.computeIfAbsent(v, k -> new ArrayList<>()).addAll(states);
     }
 
@@ -30,11 +30,11 @@ public class TestValues {
         dataTypes.put(v, t);
     }
 
-    public List<String> getValueStates(Value v) {
+    public List<Object> getValueStates(Value v) {
         return map.get(v);
     }
 
-    public void addNewTestCase(soot.Value v, String newCase) {
+    public void addNewTestCase(soot.Value v, Object newCase) {
         if (!map.containsKey(v)) {
             map.put(v, new ArrayList<>());
         }
@@ -47,10 +47,28 @@ public class TestValues {
         System.out.println("Current Test Values:");
         for(soot.Value v : functionInputs) {
             System.out.println("Variable: " + v + " of type: " + dataTypes.get(v) + " Size of test case : " + map.get(v).size());
-            for(String s : map.get(v)) {
+            for(Object s : map.get(v)) {
                 System.out.println("  Test Values: " + s);
             }
         }
+    }
+
+    public ArrayList<ArrayList<Object>> generateTestCases() {
+        //Permutates through all possible input values for the function which is used to generate Test Cases for the JUnit test generator
+        ArrayList<ArrayList<Object>> testCases = new ArrayList<>();
+        for (soot.Value v : functionInputs) {
+            List<Object> states = map.get(v);
+            for (Object state : states) {
+                ArrayList<Object> testCase = new ArrayList<>();
+                testCase.add(state);
+                testCases.add(testCase);
+            }
+        }
+
+        for(Object testCase : testCases) {
+            System.out.println("Generated Test Case: " + testCase);
+        }
+        return testCases;
     }
 
     public String generateJUnitTest(String targetClassName, String methodName) {
@@ -71,12 +89,12 @@ public class TestValues {
         // Iterate through each parameter
         for (int i = 0; i < functionInputs.size(); i++) {
             soot.Value targetParam = functionInputs.get(i);
-            List<String> valuesToTest = map.get(targetParam);
+            List<Object> valuesToTest = map.get(targetParam);
             
             if (valuesToTest == null || valuesToTest.isEmpty()) continue;
 
             // Generate a test call for each value of this parameter
-            for (String testVal : valuesToTest) {
+            for (Object testVal : valuesToTest) {
                 hasTests = true;
                 sb.append("        // Testing parameter ").append(targetParam).append(" with value: ").append(testVal).append("\n");
                 sb.append("        obj.").append(methodName).append("(");
@@ -113,15 +131,17 @@ public class TestValues {
         return sb.toString();
     }
 
-    private String formatValue(String type, String value) {
+    private String formatValue(String type, Object value) {
+        if (value == null) return "null";
+        String strVal = value.toString();
         if (type.equals("boolean")) {
-            return value.equals("0") ? "false" : "true";
+            return strVal.equals("0") ? "false" : (strVal.equals("false") ? "false" : "true");
         } else if (type.equals("int") || type.equals("byte") || type.equals("short") || type.equals("long")) {
-            return value;
+            return strVal;
         } else if (type.equals("float") || type.equals("double")) {
-            return value + (type.equals("float") ? "f" : "d");
+            return strVal + (type.equals("float") ? "f" : "d");
         } else if (type.equals("java.lang.String")) {
-            return "\"" + value + "\"";
+            return "\"" + strVal + "\"";
         }
         return "null";
     }

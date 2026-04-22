@@ -1,0 +1,28 @@
+public class MiniCoverageTarget_bucketTest_test_bucketTest_test_test_bucketTest_test_test_test_bucketTest_test_test_test_test_bucketTest_test_test_test_test_test_bucketTest extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        MiniCoverageTarget_bucketTest_test_bucketTest_test_test_bucketTest_test_test_test_bucketTest_test_test_test_test_bucketTest_test_test_test_test_test_bucketTest r0;
+
+        r0 := @this: MiniCoverageTarget_bucketTest_test_bucketTest_test_test_bucketTest_test_test_test_bucketTest_test_test_test_test_bucketTest_test_test_test_test_test_bucketTest;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public void test_test_test_test_test_test_bucket()
+    {
+        MiniCoverageTarget_bucketTest_test_bucketTest_test_test_bucketTest_test_test_test_bucketTest_test_test_test_test_bucketTest $r0;
+        MiniCoverageTarget_bucketTest_test_bucketTest_test_test_bucketTest_test_test_test_bucketTest_test_test_test_test_bucketTest_test_test_test_test_test_bucketTest r1;
+
+        r1 := @this: MiniCoverageTarget_bucketTest_test_bucketTest_test_test_bucketTest_test_test_test_bucketTest_test_test_test_test_bucketTest_test_test_test_test_test_bucketTest;
+
+        $r0 = new MiniCoverageTarget_bucketTest_test_bucketTest_test_test_bucketTest_test_test_test_bucketTest_test_test_test_test_bucketTest;
+
+        specialinvoke $r0.<MiniCoverageTarget_bucketTest_test_bucketTest_test_test_bucketTest_test_test_test_bucketTest_test_test_test_test_bucketTest: void <init>()>();
+
+        return;
+    }
+}

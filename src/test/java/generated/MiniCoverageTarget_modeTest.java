@@ -7,6 +7,11 @@ public class MiniCoverageTarget_modeTest {
     public void test_mode() {
         MiniCoverageTarget obj = new MiniCoverageTarget();
 
-        // No boundary test cases were generated for this method.
+        // Testing parameter i0 with value: 0
+        obj.mode(0);
+        // Testing parameter i0 with value: 1
+        obj.mode(1);
+        // Testing parameter i0 with value: -1
+        obj.mode(-1);
     }
 }

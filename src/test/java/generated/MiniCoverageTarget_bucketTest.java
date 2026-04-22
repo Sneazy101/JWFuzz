@@ -9,6 +9,10 @@ public class MiniCoverageTarget_bucketTest {
 
         // Testing parameter i0 with value: 0
         obj.bucket(0);
+        // Testing parameter i0 with value: 1
+        obj.bucket(1);
+        // Testing parameter i0 with value: -1
+        obj.bucket(-1);
         // Testing parameter i0 with value: 10
         obj.bucket(10);
         // Testing parameter i0 with value: 100

@@ -1,0 +1,28 @@
+public class MiniCoverageTarget__init_Test_test__init_Test__init_Test__init_Test extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        MiniCoverageTarget__init_Test_test__init_Test__init_Test__init_Test r0;
+
+        r0 := @this: MiniCoverageTarget__init_Test_test__init_Test__init_Test__init_Test;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public void test__init_()
+    {
+        MiniCoverageTarget__init_Test_test__init_Test__init_Test__init_Test r1;
+        MiniCoverageTarget__init_Test_test__init_Test__init_Test $r0;
+
+        r1 := @this: MiniCoverageTarget__init_Test_test__init_Test__init_Test__init_Test;
+
+        $r0 = new MiniCoverageTarget__init_Test_test__init_Test__init_Test;
+
+        specialinvoke $r0.<MiniCoverageTarget__init_Test_test__init_Test__init_Test: void <init>()>();
+
+        return;
+    }
+}

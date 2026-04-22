@@ -23,9 +23,15 @@ public class MiniCoverageTarget_loginTest extends java.lang.Object
 
         specialinvoke $r0.<MiniCoverageTarget: void <init>()>();
 
-        virtualinvoke $r0.<MiniCoverageTarget: boolean login(boolean,boolean,boolean)>(0, 0, 0);
+        virtualinvoke $r0.<MiniCoverageTarget: boolean login(boolean,boolean,boolean)>(1, 0, 0);
 
         virtualinvoke $r0.<MiniCoverageTarget: boolean login(boolean,boolean,boolean)>(0, 0, 0);
+
+        virtualinvoke $r0.<MiniCoverageTarget: boolean login(boolean,boolean,boolean)>(0, 1, 0);
+
+        virtualinvoke $r0.<MiniCoverageTarget: boolean login(boolean,boolean,boolean)>(0, 0, 0);
+
+        virtualinvoke $r0.<MiniCoverageTarget: boolean login(boolean,boolean,boolean)>(0, 0, 1);
 
         virtualinvoke $r0.<MiniCoverageTarget: boolean login(boolean,boolean,boolean)>(0, 0, 0);
 

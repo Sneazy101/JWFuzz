@@ -1,0 +1,28 @@
+public class MiniCoverageTarget_loginTest_test_loginTest_test_test_loginTest_test_test_test_loginTest extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        MiniCoverageTarget_loginTest_test_loginTest_test_test_loginTest_test_test_test_loginTest r0;
+
+        r0 := @this: MiniCoverageTarget_loginTest_test_loginTest_test_test_loginTest_test_test_test_loginTest;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public void test_test_test_test_login()
+    {
+        MiniCoverageTarget_loginTest_test_loginTest_test_test_loginTest_test_test_test_loginTest r1;
+        MiniCoverageTarget_loginTest_test_loginTest_test_test_loginTest $r0;
+
+        r1 := @this: MiniCoverageTarget_loginTest_test_loginTest_test_test_loginTest_test_test_test_loginTest;
+
+        $r0 = new MiniCoverageTarget_loginTest_test_loginTest_test_test_loginTest;
+
+        specialinvoke $r0.<MiniCoverageTarget_loginTest_test_loginTest_test_test_loginTest: void <init>()>();
+
+        return;
+    }
+}

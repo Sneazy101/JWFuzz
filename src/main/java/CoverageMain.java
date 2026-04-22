@@ -8,6 +8,16 @@ import java.util.Collections;
 
 public class CoverageMain {
     public static void main(String[] args) {
+        // Clear old JUnit files before generating new ones
+        java.io.File generatedDir = new java.io.File("src/test/java/generated");
+        if (generatedDir.exists() && generatedDir.isDirectory()) {
+            for (java.io.File f : generatedDir.listFiles()) {
+                if (f.isFile() && f.getName().endsWith(".java")) {
+                    f.delete();
+                }
+            }
+        }
+
         // Keep line numbers for debugging or reporting
         Options.v().set_keep_line_number(true);
 
@@ -39,10 +49,10 @@ public class CoverageMain {
         // First load the classes
         Scene.v().loadNecessaryClasses();
 
-        System.out.println("Soot has successfully loaded the following application classes:");
-        for (SootClass sc : Scene.v().getApplicationClasses()) {
-            System.out.println(" - " + sc.getName());
-        }
+        // System.out.println("Soot has successfully loaded the following application classes:");
+        // for (SootClass sc : Scene.v().getApplicationClasses()) {
+        //     System.out.println(" - " + sc.getName());
+        // }
 
         // Run packs to generate output and apply our transformer
         PackManager.v().runPacks();

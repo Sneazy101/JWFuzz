@@ -14,26 +14,45 @@ public class BranchTarget_classifyTest extends java.lang.Object
 
     public void test_classify()
     {
-        BranchTarget $r0;
         BranchTarget_classifyTest r1;
+        int $i1, $i3;
+        BranchTarget $r2;
 
         r1 := @this: BranchTarget_classifyTest;
 
-        $r0 = new BranchTarget;
+        $r2 = new BranchTarget;
 
-        specialinvoke $r0.<BranchTarget: void <init>()>();
+        specialinvoke $r2.<BranchTarget: void <init>()>();
 
-        virtualinvoke $r0.<BranchTarget: int classify(int,boolean,boolean,int)>(0, 0, 0, 0);
+        virtualinvoke $r2.<BranchTarget: int classify(int,boolean,boolean,int)>(0, 0, 0, 0);
 
-        virtualinvoke $r0.<BranchTarget: int classify(int,boolean,boolean,int)>(18, 0, 0, 0);
+        virtualinvoke $r2.<BranchTarget: int classify(int,boolean,boolean,int)>(1, 0, 0, 0);
 
-        virtualinvoke $r0.<BranchTarget: int classify(int,boolean,boolean,int)>(0, 0, 0, 0);
+        $i1 = (int) -1;
 
-        virtualinvoke $r0.<BranchTarget: int classify(int,boolean,boolean,int)>(0, 0, 0, 0);
+        virtualinvoke $r2.<BranchTarget: int classify(int,boolean,boolean,int)>($i1, 0, 0, 0);
 
-        virtualinvoke $r0.<BranchTarget: int classify(int,boolean,boolean,int)>(0, 0, 0, 10);
+        virtualinvoke $r2.<BranchTarget: int classify(int,boolean,boolean,int)>(18, 0, 0, 0);
 
-        virtualinvoke $r0.<BranchTarget: int classify(int,boolean,boolean,int)>(0, 0, 0, 20);
+        virtualinvoke $r2.<BranchTarget: int classify(int,boolean,boolean,int)>(0, 1, 0, 0);
+
+        virtualinvoke $r2.<BranchTarget: int classify(int,boolean,boolean,int)>(0, 0, 0, 0);
+
+        virtualinvoke $r2.<BranchTarget: int classify(int,boolean,boolean,int)>(0, 0, 1, 0);
+
+        virtualinvoke $r2.<BranchTarget: int classify(int,boolean,boolean,int)>(0, 0, 0, 0);
+
+        virtualinvoke $r2.<BranchTarget: int classify(int,boolean,boolean,int)>(0, 0, 0, 0);
+
+        virtualinvoke $r2.<BranchTarget: int classify(int,boolean,boolean,int)>(0, 0, 0, 1);
+
+        $i3 = (int) -1;
+
+        virtualinvoke $r2.<BranchTarget: int classify(int,boolean,boolean,int)>(0, 0, 0, $i3);
+
+        virtualinvoke $r2.<BranchTarget: int classify(int,boolean,boolean,int)>(0, 0, 0, 10);
+
+        virtualinvoke $r2.<BranchTarget: int classify(int,boolean,boolean,int)>(0, 0, 0, 20);
 
         return;
     }

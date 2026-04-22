@@ -9,5 +9,9 @@ public class MiniCoverageTarget_signTest {
 
         // Testing parameter i0 with value: 0
         obj.sign(0);
+        // Testing parameter i0 with value: 1
+        obj.sign(1);
+        // Testing parameter i0 with value: -1
+        obj.sign(-1);
     }
 }
